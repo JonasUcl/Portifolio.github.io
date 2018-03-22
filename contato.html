@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contato</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <script src="main.js"></script>
+
+    <script language="JavaScript">
+        function getCookie(name) {
+            var cname = name + "=";
+            var dc = document.cookie;
+            if (dc.length > 0) {
+                begin = dc.indexOf(cname);
+                if (begin != -1) {
+                    begin += cname.length;
+                    end = dc.indexOf(";", begin);
+                    if (end == -1) end = dc.length;
+                    return unescape(dc.substring(begin, end));
+                }
+            }
+            return null;
+        }
+
+        function setCookie(name, value) {
+            var now = new Date();
+            var then = new Date(now.getTime() + 31536000000);
+            document.cookie = name + "=" + escape(value) + "; expires=" + then.toGMTString() + "; path=/";
+        }
+
+        function getInfo(form) {
+            form.info.value = "Browser Information: " + navigator.userAgent;
+        }
+
+        function getValue(element) {
+            var value = getCookie(element.name);
+            if (value != null) element.value = value;
+        }
+
+        function setValue(element) {
+            setCookie(element.name, element.value);
+        }
+
+        function fixElement(element, message) {
+            alert(message);
+            element.focus();
+        }
+
+        function isMailReady(form) {
+            var passed = false;
+            if (form.fullname.value == "") {
+                fixElement(form.fullname, "coloque seu nome.");
+            }
+            else if (form.email.value.indexOf("@") == -1 || form.email.value.indexOf(".") == -1) {
+                fixElement(form.email, "coloque um e-mail válido.");
+            }
+            else if (form.message.value == "") {
+                fixElement(form.message, "coloque uma mensagem.");
+            }
+            else {
+                getInfo(form);
+                passed = true;
+            }
+            return passed;
+        }
+// End -->
+    </script>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="nav">
+            <a class="a" href="home.html">INICIO</a>
+            <a class="b" href="#">SOBRE MIM</a>
+            <a class="c" href="extras.html">EXTRA</a>
+            <a class="d" href="contato.html">CONTATO</a>
+        </div>
+        <center style="margin-top: 15em">
+
+            <form name="mail" action="mailto:jonasbrunowgomes@gmail.com" method="post" enctype="text/plain" onSubmit="return isMailReady(this);">
+                <input type="hidden" name="info">
+                <table border=0 cellpadding=5 cellspacing=0>
+                    <tr>
+                        <td>
+                            Seu nome
+                            <input type="text" name="fullname" onFocus="getValue(this)" onBlur="setValue(this)">
+                        </td>
+                        <td>
+                            Seu e-mail
+                            <input type="text" name="email" onFocus="getValue(this)" onBlur="setValue(this)">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            Sua mensagem
+                            <textarea rows="8" cols="38" name="message"></textarea>
+                        </td>
+                    </tr>
+                    <tr style="margin-left: 85em">
+                        <td colspan="2">
+                            <input type="submit" value="enviar">
+                            <input type="reset" value="cancelar">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </center>
+
+</body>
+
+</html>
